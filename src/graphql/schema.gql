@@ -1,0 +1,1513 @@
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+input SignupUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+}
+
+type UserPayLoad {
+  user: User!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Feedback {
+  id: Int!
+  date: DateTime!
+  pageFrom: String!
+  type: String!
+  description: String!
+}
+
+input FeedbackInput {
+  id: Float
+  profile: ProfileInput
+  pageFrom: String!
+  type: String!
+  description: String!
+}
+
+type Following {
+  profileFollower: Profile!
+  profileFollowing: Profile!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+input FollowingInput {
+  profileIdFollower: Float!
+  profileIdFollowing: Float!
+}
+
+type Group {
+  id: Int!
+  name: String!
+  adminProfileId: Int!
+  type: GroupType
+  institutionName: String
+  isVerified: Boolean
+  institutionId: Int
+  status: GroupStatus
+  photo: String
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type GroupDetail {
+  id: Int!
+  group: Group
+  memberProfileId: Int!
+  memberRole: GroupDetailRole
+  status: GroupDetailStatus
+  notification: GroupDetailNotification
+  inviterProfileId: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+input GroupDetailInput {
+  id: Float
+  groupId: GroupInput
+  memberProfileId: Float
+  memberRole: GroupDetailRoleInput
+  status: GroupDetailStatusInput
+  notification: GroupDetailNotificationInput
+  inviterProfileId: Float
+}
+
+type GroupDetailNotification {
+  status: String!
+}
+
+input GroupDetailNotificationInput {
+  status: String
+}
+
+type GroupDetailRole {
+  role: String!
+}
+
+input GroupDetailRoleInput {
+  role: String
+}
+
+type GroupDetailStatus {
+  status: String!
+}
+
+input GroupDetailStatusInput {
+  status: String
+}
+
+input GroupInput {
+  id: Float
+  name: String
+  adminProfileId: Float
+  type: GroupTypeInput
+  institutionName: String
+  isVerified: Boolean
+  institutionId: Float
+  status: GroupStatusInput
+  photo: String
+  details: [GroupDetailInput!]
+}
+
+type GroupStatus {
+  status: String!
+}
+
+input GroupStatusInput {
+  status: String
+}
+
+type GroupType {
+  type: String!
+}
+
+input GroupTypeInput {
+  type: String
+}
+
+input HashTagInput {
+  id: Int
+  label: String
+}
+
+input HashTagListInput {
+  hashTags: [HashTagInput!]
+}
+
+type Invite {
+  id: Int!
+  profileIdInviter: Int!
+  accepted: Boolean
+  acceptedDate: DateTime
+  userIdInvited: Int
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+input InviteInput {
+  id: Float
+  profileIdInviter: Float!
+  accepted: Boolean
+  acceptedDate: DateTime
+  userIdInvited: Float
+}
+
+type Logs {
+  id: Int!
+  profile_id: Int
+  date_time: String
+  module: String!
+  country: String!
+  city: String!
+  ip: String!
+  log_level: String!
+  message: String!
+  class: String!
+}
+
+input LogsInput {
+  id: Float
+  profile_id: Float!
+  date_time: String
+  module: String!
+  country: String!
+  city: String!
+  ip: String!
+  log_level: String!
+  message: String!
+  class: String!
+}
+
+type PaymentMethod {
+  id: Int!
+  user: User!
+  paymentMethodSystem: RefPaySystem
+  paymentExternalId: String!
+  paymentMethodName: String
+  systemMethodId: String
+  validityDate: DateTime
+  type: String
+  isDefaultPaymentMethod: Boolean
+  isDefaultPayoutMethod: Boolean
+  brand: String
+  label: String
+  authentication: String
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+input PaymentMethodInput {
+  id: Float
+  user: UserInput
+  paymentMethodSystem: RefPaySystemInput
+  paymentExternalId: String
+  paymentMethodName: String
+  systemMethodId: String
+  validityDate: DateTime
+  type: String
+  isDefaultPaymentMethod: Boolean
+  isDefaultPayoutMethod: Boolean
+}
+
+type Profile {
+  id: Int!
+  user: User!
+  profileType: RefProfileType
+  name: String!
+  firstName: String
+  lastName: String
+  iban: String
+  photoPath: String
+  tutoringLanguages: [ProfileTutoringLanguage!]
+  appDisplayLanguage: RefLanguage
+  thematicId: Int
+  profileMaterials: [ProfileMaterial!]
+  reminderEmail: String
+  reminderPhone: String
+  hashTagIds: [Int!]
+  currencyId: Int
+  createdAt: DateTime!
+  updatedAt: DateTime
+  score: Float
+  completed: Boolean
+  hashTags: [HashTag!]
+  currency: RefCurrency
+  reviews: [SessionReview!]
+  rating: Float
+  thematic: RefThematic
+  materials: [RefMaterial!]
+  sessionRole: RefProfileType
+  role: RefSessionRole
+  creditTime: Float
+}
+
+input ProfileIdsInput {
+  ids: [Float!]!
+}
+
+input ProfileInput {
+  id: Float
+  user: UserInput
+  profileType: RefProfileTypesInput
+  name: String
+  firstName: String
+  lastName: String
+  iban: String
+  photoPath: String
+  tutoringLanguages: [ProfileTutoringLanguageInput!]
+  thematicId: Float
+  profileMaterials: [ProfileMaterialInput!]
+  reminders: [Float!]
+  reminderEmail: String
+  reminderPhone: String
+  appDisplayLanguage: RefLanguageInput
+  hashTagList: HashTagListInput
+  currencyId: Float
+}
+
+type ProfileMaterial {
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  country: RefCountry!
+  grade: RefGrade!
+  subject: RefSubject!
+  category: RefCategory!
+  subCategory: RefSubCategory!
+}
+
+input ProfileMaterialInput {
+  id: Int
+  profile: ProfileInput
+  countryId: Int
+  gradeId: Int
+  subjectId: Int
+  categoryId: Int
+  subCategoryId: Int
+}
+
+type ProfileTutoringLanguage {
+  id: Int!
+  language: RefLanguage!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input ProfileTutoringLanguageInput {
+  id: Int
+  profile: ProfileInput
+  language: RefLanguageInput
+}
+
+type Recommendation {
+  id: Int!
+  recommenderProfileId: Int!
+  recommendedProfileId: Int
+  profileTypeId: Int!
+  tutoringSubcategoriesId: [Int!]
+  tutoringLanguagesId: [Int!]
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+input RecommendationInput {
+  recommenderProfileId: Float!
+  recommendedProfileId: Float
+  profileTypeId: Float!
+  tutoringSubcategoriesId: [Float!]
+  tutoringLanguagesId: [Float!]
+}
+
+type RefAccountStatus {
+  id: Int!
+  label: String!
+}
+
+input RefAccountStatusInput {
+  id: Float!
+  label: String!
+}
+
+type RefLanguage {
+  id: Int!
+  label: String!
+}
+
+input RefLanguageInput {
+  id: Float!
+  label: String!
+}
+
+type RefPaySystem {
+  id: Int!
+  label: String!
+}
+
+input RefPaySystemInput {
+  id: Float
+  label: String
+}
+
+type RefProfileType {
+  id: Int!
+  name: String!
+  isAllowedToPost: Boolean!
+}
+
+input RefProfileTypesInput {
+  id: Float!
+  name: String!
+}
+
+type Support {
+  id: Int!
+  profileId: Int!
+  tutoringId: Int!
+  description: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+input SupportInput {
+  id: Float
+  profileId: Float!
+  tutoringId: Float!
+  description: String!
+}
+
+type Transaction {
+  id: Int!
+  profile: Profile
+  userId: Float!
+  activityDescription: String
+  tutoringId: Float
+  paymentMethodId: Float
+  activityType: TransactionType
+  creditDebit: String!
+  amount: Float!
+  currency: String!
+  balance: Float!
+  tokenAmount: Float
+  tokenBalance: Float
+  asTutorTokensBalance: Float
+  sessionId: Int
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+input TransactionInput {
+  id: Float
+  profileId: Float
+  profile: ProfileInput
+  userId: Float
+  activityDescription: String
+  tutoringId: Float
+  paymentMethodId: Float
+  activityType: TransactionTypeInput
+  creditDebit: String
+  amount: Float
+  tokenAmount: Float
+  tokenBalance: Float
+  currency: String
+  balance: Float
+  sessionId: Float
+}
+
+type TransactionType {
+  id: Int!
+  label: String!
+}
+
+input TransactionTypeInput {
+  id: Float
+  label: String
+}
+
+type User {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  gender: String
+  email: String!
+  phoneNumber: String
+  password: String!
+  role: String
+  score: Float
+  activeProfile: Profile
+  emailValidation: Boolean
+  phoneValidation: Boolean
+  profiles: [Profile!]
+  city: String
+  countryId: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  accountStatus: RefAccountStatus
+  country: RefCountry
+}
+
+input UserInput {
+  id: Float
+  firstName: String
+  lastName: String
+  gender: String
+  email: String
+  phoneNumber: String
+  password: String
+  role: String = "USER"
+  score: Float = 0
+  accountStatus: RefAccountStatusInput
+  profiles: [ProfileInput!]
+  activeProfileId: Int
+}
+
+type Applying {
+  id: Int!
+  tutoring: Tutoring
+  status: RefApplyingStatus!
+  transactionId: Int
+  session: Session
+  sessionId: Int
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
+  profile: Profile
+}
+
+input ApplyingInput {
+  id: Float
+  status: RefApplyingStatusInput
+  deliveryDate: DateTime
+  isAccepted: Boolean
+  isPosted: Boolean
+  transactionId: Int
+  sessions: [SessionInput!]
+}
+
+input ApplyingSessionInput {
+  sessionId: Int
+  tutoringId: Int
+}
+
+type AttendeePayload {
+  profile: Profile!
+  bookingStatus: RefBookingStatus
+  role: RefSessionRole
+}
+
+type Booking {
+  id: Int!
+  tutoring: Tutoring!
+  status: RefBookingStatus!
+  transactionId: Int
+  session: Session!
+  role: RefSessionRole
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
+  updatedBy: Int
+  tuteeBudget: Int
+  isRebook: Boolean
+  profile: Profile
+}
+
+input CreateHashTagsInput {
+  hashTags: [HashTagInput!]
+}
+
+input ExtraTimeInput {
+  profileId: Int!
+  extraTime: Float!
+}
+
+type HashTag {
+  id: Int!
+  label: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Institution {
+  id: Int!
+  name: String!
+  verifiedBy: Int
+  zipCode: String
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+input MaterialInput {
+  countryId: Int
+  gradeId: Int
+  subjectId: Int
+  categoryId: Int
+  subCategoryId: Int
+}
+
+type McqAnswer {
+  id: Int!
+  mcqQuestion: McqQuestion
+  label: String!
+  isGoodAnswer: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+input McqAnswerInput {
+  id: Float
+  mcqQuestionId: Float
+  label: String!
+  isGoodAnswer: Boolean
+}
+
+type McqAnswerResult {
+  correctAnswer: McqAnswer
+  userAnswer: McqAnswer
+  answer: McqAnswer
+  isCorrect: Boolean!
+}
+
+type McqQuestion {
+  id: Int!
+  tutoring: Tutoring
+  sorting: Int
+  question: String!
+  answers: [McqAnswer!]!
+  timer: Int
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+input McqQuestionInput {
+  id: Float
+  sorting: Float
+  question: String
+  answers: [McqAnswerInput!]!
+  timer: Float
+}
+
+type McqQuestionResult {
+  question: McqQuestion!
+  result: [McqAnswerResult!]!
+  score: Float!
+}
+
+input McqResponseContainerInput {
+  tutoringId: Float
+  sessionId: Float
+  responses: [McqResponseInput!]
+}
+
+input McqResponseInput {
+  tutoringId: Float
+  sessionId: Float
+  questionId: Float
+  answerId: Float
+}
+
+type McqResult {
+  questions: [McqQuestionResult!]!
+  score: Float!
+}
+
+type Notification {
+  id: Int!
+  content: String!
+  cta: String!
+  profileId: Int!
+  isRead: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+input NotificationInput {
+  id: Float
+  content: String
+  cta: String
+  profileId: Float
+  isRead: Boolean
+}
+
+type NotificationToken {
+  id: Int!
+  profileId: Int!
+  clientToken: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+input NotificationTokenInput {
+  id: Float
+  profileId: Float
+  clientToken: String
+}
+
+input Pagination {
+  page: Float = 0
+  size: Float = 0
+}
+
+input ReadNotificationsInput {
+  ids: [Float!]
+}
+
+type RefApplyingStatus {
+  id: Int!
+  label: String!
+}
+
+input RefApplyingStatusInput {
+  id: Float!
+  label: String!
+}
+
+type RefBookingStatus {
+  id: Int!
+  label: String!
+}
+
+type RefCategory {
+  id: Int!
+  label: String!
+}
+
+type RefCountry {
+  id: Int!
+  code: String!
+  label: String!
+}
+
+type RefCurrency {
+  id: Int!
+  label: String!
+}
+
+type Reference {
+  id: Int!
+  label: String!
+}
+
+input ReferenceInput {
+  id: Int
+  label: String
+}
+
+type RefExperienceLevel {
+  id: Int!
+  label: String!
+}
+
+type RefGrade {
+  id: Int!
+  label: String!
+  age: Int
+}
+
+type RefLanguageCore {
+  id: Int!
+  label: String
+}
+
+type RefMaterial {
+  country: RefCountry!
+  grade: RefGrade!
+  subject: RefSubject!
+  category: RefCategory!
+  subCategory: RefSubCategory!
+}
+
+type RefParameter {
+  id: String!
+  value: String!
+  description: String!
+}
+
+type RefSessionRole {
+  id: Int!
+  label: String!
+}
+
+type RefSessionStatus {
+  id: Int!
+  label: String!
+}
+
+type RefSessionType {
+  id: Int!
+  label: String!
+}
+
+type RefSubCategory {
+  id: Int!
+  label: String!
+}
+
+type RefSubject {
+  id: Int!
+  label: String!
+}
+
+type RefThematic {
+  id: Int!
+  label: String!
+}
+
+type RefTutoringType {
+  id: Int!
+  label: String!
+}
+
+type SearchHits {
+  text: String!
+  hits: Int!
+}
+
+type SearchHitsResponse {
+  text: String
+  photoPath: String
+  type: String
+}
+
+input SearchHitsTopInput {
+  text: String!
+  limit: Float!
+}
+
+type Session {
+  id: Int!
+  applyings: [Applying!]
+  tutoring: Tutoring
+  tutoringMap: Tutoring
+  meetingDate: DateTime!
+  duration: Float!
+  attendeesCount: Float!
+  isPrivate: Boolean
+  cost: Float!
+  status: RefSessionStatus
+  type: RefSessionType!
+  totalBudgetSum: Float
+  tutee1ProfileId: Int
+  tutee2ProfileId: Int
+  tutee3ProfileId: Int
+  tutor1ProfileId: Float
+  tutor2ProfileId: Float
+  tutor3ProfileId: Float
+  bookings: [Booking!]
+  createdAt: DateTime!
+  updatedAt: DateTime
+  updatedBy: Int
+  deletedAt: DateTime
+  reviews: [SessionReview!]
+  acceptedApplicationId: Int
+  acceptedTutorId: Int
+  attendees: [AttendeePayload!]
+}
+
+input SessionFilterInput {
+  from: DateTime
+  to: DateTime
+}
+
+input SessionInput {
+  id: Int
+  profileId: Float
+  meetingDate: DateTime
+  duration: Int
+  tokens: Int
+}
+
+type SessionReview {
+  profileId: Int!
+  session: Session!
+  score: Float
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime
+  profile: Profile
+}
+
+input SessionReviewInput {
+  profileId: Int
+  sessionId: Int
+  score: Float
+  description: String
+}
+
+input SessionsInput {
+  sessions: [SessionInput!]
+}
+
+type Tutoring {
+  id: Int!
+  title: String!
+  description: String!
+  posterProfileId: Int!
+  photoPath: String
+  videoPath: String
+  documentPath: String
+  language: RefLanguageCore
+  hashTagIds: [Int!]
+  hashTags: [HashTag!]
+  type: RefTutoringType
+  tutorProfileId: Int
+  preferredTutorId: Int
+  thematic: RefThematic
+  material: RefMaterial
+  mcqQuestions: [McqQuestion!]
+  bookings: [Booking!]
+  applyings: [Applying!]
+  sessions: [Session!]
+  mappedSessions: [Session!]
+  tutorials: [TutoringTutorialLink!]
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
+  updatedBy: Int
+  reviews: [SessionReview!]
+  rating: Float
+  mcqPassed: Boolean
+  hasMcq: Boolean
+  posterProfile: Profile
+  tutorProfile: Profile
+  bookers: [Profile!]
+  appliers: [Profile!]
+}
+
+input TutoringInput {
+  id: Float
+  title: String
+  description: String
+  photoPath: String
+  videoPath: String
+  documentPath: String
+  languageId: Float
+  thematicId: Float
+  material: MaterialInput
+  hashTagList: CreateHashTagsInput
+  typeId: Int
+  tutorProfileId: Float
+  preferredTutorId: Float
+  tutoringSubCategoryIds: [Int!]
+  mcqQuestions: [McqQuestionInput!]
+  applyings: [ApplyingInput!]
+  sessions: [SessionInput!]
+  tuteeProfileId: Int
+}
+
+input TutoringSearchInput {
+  languageIds: [Int]
+  typeIds: [Int]
+  hashTagIds: [Int]
+  searchText: String
+  thematic: ReferenceInput
+  materials: [MaterialInput]
+}
+
+input TutoringTutorialInput {
+  id: Float
+  tutoringId: Float
+  recordingId: Float
+  description: String
+  source: String
+  thumbnail: String
+}
+
+type TutoringTutorialLink {
+  id: Int!
+  tutoring: Tutoring!
+  session: Session!
+  recordingId: Float!
+  description: String
+  source: String!
+  thumbnail: String
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+input ApplyingNotificationMetadataInput {
+  sessionId: Float
+  action: String
+  profileId: Float
+}
+
+input ChatNotificationMetadataInput {
+  sessionId: String
+  imagUrl: String
+  name: String
+  type: String
+  typeId: Float
+  participants: [Int!]
+}
+
+type MailPayLoad {
+  success: Boolean!
+}
+
+input NotificationMetadataInput {
+  chatMetadata: ChatNotificationMetadataInput
+  applyingMetadata: ApplyingNotificationMetadataInput
+}
+
+type ProfileNotification {
+  id: Int!
+  type: ProfileNotificationType!
+  title: String!
+  message: String
+  seen: Boolean!
+  profileId: Int
+  cta: ProfileNotificationCta
+  queryParam: [ProfileNotificationQueryParam!]
+  subMessage: String
+  icon: String
+  userId: Int!
+  createdAt: DateTime!
+  profile: Profile
+  user: User
+}
+
+type ProfileNotificationCta {
+  id: Int!
+  label: String!
+  uri: String!
+}
+
+input ProfileNotificationCtaInput {
+  id: Int
+  label: String
+  uri: String
+}
+
+input ProfileNotificationInput {
+  id: Float
+  type: ProfileNotificationTypeInput!
+  title: String!
+  message: String
+  seen: Boolean
+  profileId: Int
+  cta: ProfileNotificationCtaInput
+  queryParam: [ProfileNotificationQueryParamsInput!]
+  subMessage: String
+  icon: String
+  userId: Int!
+}
+
+type ProfileNotificationQueryParam {
+  id: Int!
+  key: String!
+  value: String!
+  notification: ProfileNotification!
+}
+
+input ProfileNotificationQueryParamsInput {
+  id: Int
+  key: String
+  value: String
+}
+
+type ProfileNotificationType {
+  id: Int!
+  label: String!
+}
+
+input ProfileNotificationTypeInput {
+  id: Float
+  label: String
+}
+
+input SendMailInput {
+  from: String!
+  to: String!
+  subject: String
+  html: String
+  cc: String
+  bcc: [String!]
+}
+
+input SnsNotificationInput {
+  title: String
+  body: String
+  userIds: [Int!]
+  profileIds: [Int!]
+  type: String
+  metadata: NotificationMetadataInput
+}
+
+type SnsNotificationToken {
+  id: Int!
+  userId: Int!
+  profileId: Int!
+  token: String!
+  tokenType: String!
+}
+
+input SnsNotificationTokenInput {
+  userId: Float!
+  profileId: Float
+  token: String!
+  tokenType: String!
+}
+
+type SignS3Response {
+  signedRequest: String!
+  url: String!
+}
+
+type SingleUploadResponse {
+  success: Boolean!
+  message: String!
+  filename: String
+  encoding: String
+  mimetype: String
+  location: String
+  url: String
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
+type Card {
+  id: String
+  object: String
+  address_city: String
+  address_country: String
+  address_line1: String
+  address_line1_check: String
+  address_line2: String
+  address_state: String
+  address_zip: String
+  address_zip_check: String
+  brand: String
+  country: String
+  cvc_check: String
+  dynamic_last4: String
+  exp_month: Int
+  exp_year: Int
+  fingerprint: String
+  funding: String
+  last4: String
+  metadata: TokenMetadata
+  name: String
+  tokenization_method: String
+}
+
+type CheckoutSession {
+  id: String!
+  object: String
+  allow_promotion_codes: Boolean
+  amount_subtotal: Float
+  amount_total: Float
+  cancel_url: String
+  client_reference_id: String
+  currency: String
+  customer_email: String
+  livemode: Boolean
+  metadata: TokenMetadata
+  payment_method_types: [String!]
+  success_url: String
+}
+
+input CreditCardInput {
+  number: String!
+  exp_month: Float!
+  exp_year: Float!
+  cvc: String!
+}
+
+type Customer {
+  id: String!
+  object: String
+  address: CustomerAddress
+  balance: Float
+  created: Float
+  currency: String
+  default_source: String
+  delinquent: Boolean
+  description: String
+  discount: String
+  email: String
+  invoice_prefix: String
+  invoice_settings: CustomerInvoiceSetting
+  livemode: Boolean
+  metadata: TokenMetadata
+  name: String
+  phone: String
+  preferred_locales: [String!]
+  shipping: String
+  sources: SourceList!
+  tax_exempt: String
+}
+
+type CustomerAddress {
+  city: String
+  country: String
+  line1: String
+  line2: String
+  postal_code: String
+  state: String
+}
+
+input CustomerInput {
+  email: String!
+}
+
+type CustomerInvoiceSetting {
+  custom_fields: String
+  default_payment_method: String
+  footer: String
+}
+
+input ItemInput {
+  price: String!
+  currency: String
+}
+
+type Payment {
+  amount: Float
+  amount_captured: Float
+  amount_refunded: Float
+  application_fee_amount: Float
+  calculated_statement_descriptor: String
+  captured: Boolean
+  created: Float
+  currency: String
+  description: String
+  disputed: Boolean
+  failure_code: String
+  failure_message: String
+  id: String
+  livemode: Boolean
+  object: String
+  paid: Boolean
+  payment_method: String
+  payment_method_details: PaymentMethodDetail
+  receipt_email: String
+  receipt_number: String
+  receipt_url: String
+  refunded: Boolean
+  statement_descriptor: String
+  statement_descriptor_suffix: String
+  status: String
+  transfer_group: String
+}
+
+input PaymentInput {
+  amount: Float!
+  currency: String!
+  description: String
+  source: String
+  customer: String!
+}
+
+type PaymentMethodDetail {
+  card: StripeChargeCard
+}
+
+type Result {
+  id: String
+  links: [ResultLink!]
+  status: String
+}
+
+type ResultLink {
+  href: String
+  method: String
+  rel: String
+}
+
+type Source {
+  id: String
+  object: String
+  amount: Float
+  card: Card
+  client_secret: String
+  created: Float
+  currency: String
+  customer: String
+  flow: String
+  livemode: Boolean
+  metadata: TokenMetadata
+  statement_descriptor: String
+  status: String
+  type: String
+  usage: String
+}
+
+type SourceList {
+  object: String!
+  data: [Source!]
+}
+
+type StripeChargeCard {
+  brand: String
+  country: String
+  description: String
+  exp_month: Float
+  exp_year: Float
+  fingerprint: String
+  funding: String
+  iin: String
+  issuer: String
+  last4: String
+  moto: Boolean
+  network: String
+}
+
+type Token {
+  id: String
+  object: String
+  card: Card
+  client_ip: String
+  created: Int
+  livemode: Boolean
+  type: String
+  used: Boolean
+}
+
+input TokenInput {
+  card: CreditCardInput!
+}
+
+type TokenMetadata {
+  name: String
+}
+
+type Query {
+  isAuthenticatedProfile(profileId: Float!): Profile!
+  checkEmailExists(email: String!): Boolean!
+  isAuthenticated: Boolean!
+  users: [User!]!
+  user: User
+  userByEmail(email: String!): User
+  userAttributes: User
+  profiles: [Profile!]!
+  profile(id: Float!): Profile
+  profilesByUserId(userId: Float!): [Profile!]
+  profilesByIds(data: ProfileIdsInput!): [Profile!]
+  checkNameExists(name: String!): Boolean
+  searchProfiles(query: String!): [Profile!]
+  searchTutorProfiles(query: String!): [Profile!]
+  languages: [RefLanguage!]!
+  languagesByIds(ids: [Int!]!): [RefLanguage!]!
+  language(id: Float!): RefLanguage
+  profileTypes(locale: String): [RefProfileType!]!
+  profileType(locale: String, id: Float!): RefProfileType
+  followers(profileId: Float!): [Following!]!
+  followings(profileId: Float!): [Following!]!
+  areConnected(id2: Float!, id1: Float!): Boolean!
+  transactions: [Transaction!]!
+  transaction(id: Float!): Transaction!
+  transactionsByProfileId(profileId: Float!): [Transaction!]!
+  transactionsByUserId(userId: Float!): [Transaction!]!
+  myBalance: Float!
+  myTokenBalance: Float!
+  paymentMethods: [PaymentMethod!]!
+  paymentMethod(id: Float!): PaymentMethod!
+  paymentMethodsByUser(userId: Float!): [PaymentMethod!]!
+  myPaymentMethods: [PaymentMethod!]!
+  creditCardsByUser(userId: Float!): PaymentMethod!
+  getDefaultPaymentMethod: PaymentMethod!
+  group(id: Float!): Group
+  groupDetailsByProfileId(profileId: Float!): [GroupDetail!]
+  groupDetail(id: Float!): GroupDetail
+  groupDetailsByGroupId(groupId: Float!): [GroupDetail!]
+  isSponsoredBy(sponsorId: Float!): Boolean!
+  isSponsorOf(sponsoredId: Float!): Boolean!
+  hashTags: [HashTag!]!
+  tutoringsIds(after: DateTime, pageSize: Float!): [Tutoring!]!
+  searchTutorings(filter: TutoringSearchInput!): [Tutoring!]!
+  isAllowedToPost: Boolean!
+  tutoring(id: Float!): Tutoring
+  tutoringBasicInfo(id: Float!): Tutoring
+  tutoringProfile(profileId: Float!, tutoringId: Float!): Profile
+    @deprecated(
+      reason: "moved to sessionResolver and replaced by sessionProfile"
+    )
+  refLanguages: [RefLanguageCore!]
+  refLanguagesByLocale(locale: String!): [RefLanguageCore!]
+  experienceLevel(id: Float!): RefExperienceLevel!
+  experienceLevels: [RefExperienceLevel!]!
+  experienceLevelsByLocale(locale: String!): [RefExperienceLevel!]!
+  subCategories: [RefSubCategory!]!
+  subCategoriesByIds(ids: [Int!]!): [RefSubCategory!]!
+  tutoringType(id: Float!): RefTutoringType!
+  tutoringTypes: [RefTutoringType!]!
+  tutoringTypesByLocale(locale: String!): [RefTutoringType!]
+  searchHits: [SearchHits!]!
+  top(data: SearchHitsTopInput!): [SearchHitsResponse!]!
+  sessionProfile(sessionId: Float!, profileId: Float!): Profile
+  session(id: Float!): Session
+  upComingSession(tutoringId: Float!): Session
+  overlappingSessions(input: SessionInput!): [Session!]
+  mySessions(filter: SessionFilterInput): [Session!]
+  calcCreditTime(balance: Float!, sessionId: Float!): Float
+  applyings: [Applying!]!
+  applying(locale: String, id: Float!): Applying!
+  canApply(tutoringId: Float!): Boolean!
+  applyingsBySessionId(sessionId: Float!): [Applying!]!
+  applyingsByTutoringId(locale: String, tutoringId: Float!): [Applying!]!
+  currencies(label: String, pagination: Pagination): [RefCurrency!]!
+  currenciesByLocale(
+    locale: String!
+    label: String
+    pagination: Pagination
+  ): [RefCurrency!]!
+  bookings: [Booking!]!
+  bookingsBySessionId(sessionId: Float!): [Booking!]!
+  booking(locale: String, id: Float!): Booking!
+  categories: [RefCategory!]!
+  categoriesByLocale(locale: String!): [RefCategory!]!
+  mcqQuestions: [McqQuestion!]!
+  tutoringQuestions(tutoringId: Float!): [McqQuestion!]!
+  notificationsByProfile(profileId: Float!): [Notification!]
+  institutions: [Institution!]!
+  countries(
+    locale: String
+    label: String
+    pagination: Pagination
+  ): [RefCountry!]!
+  countriesByLocale(
+    locale: String!
+    label: String
+    pagination: Pagination
+  ): [RefCountry!]!
+  grades(
+    label: String
+    pagination: Pagination
+    filter: MaterialInput!
+  ): [RefGrade!]!
+  gradesByLocale(
+    locale: String!
+    label: String
+    pagination: Pagination
+    filter: MaterialInput!
+  ): [RefGrade!]!
+  subjects(label: String, pagination: Pagination): [RefSubject!]!
+  gradesByGradeId(gradeId: Float!): [RefSubject!]!
+  filter(field: String!, filter: MaterialInput!): [Reference!]!
+  thematics(
+    locale: String
+    label: String
+    pagination: Pagination
+  ): [RefThematic!]!
+  thematicsByLocale(
+    locale: String!
+    label: String
+    pagination: Pagination
+  ): [RefThematic!]!
+  tutoringMcqResult(tutoringId: Float!): McqResult!
+  parameters: [RefParameter!]!
+  dummy: MailPayLoad!
+  profileNotifications(
+    userId: Float
+    pagination: Pagination
+  ): [ProfileNotification!]!
+  profileNotification(id: Float): ProfileNotification!
+  uploadPreSignedUrl(mimetype: String!, filename: String!): SignS3Response!
+  getStripeCustomer(customerId: String!): Customer
+  getStripeCustomerCards(customerId: String!): [Source!]
+}
+
+type Mutation {
+  signup(data: SignupUserInput!): UserPayLoad!
+  login(data: LoginUserInput!): UserPayLoad!
+  refreshToken: UserPayLoad!
+  logout: Boolean!
+  confirmEmail(id: String!): UserPayLoad!
+  requestResetPassword(email: String!): UserPayLoad!
+  resetPassword(password: String!, token: String!): UserPayLoad!
+  resendConfirmEmail(email: String): UserPayLoad!
+  updateUser(data: UserInput!): User!
+  createProfile(data: ProfileInput!): Profile!
+  updateProfile(data: ProfileInput!): Profile!
+  deleteProfile(id: Float!): Boolean!
+  createFeedback(profileId: Float!, data: FeedbackInput!): Feedback!
+  followProfile(data: FollowingInput!): Following!
+  deleteFollowing(data: FollowingInput!): Boolean!
+  createSupport(data: SupportInput!): Support!
+  createRecommendation(data: RecommendationInput!): Recommendation!
+  createInvite(data: InviteInput!): Invite!
+  createTransaction(data: TransactionInput!): Transaction!
+  updateTransaction(data: TransactionInput!): Transaction!
+  deleteTransaction(id: Float!): Boolean!
+  setDefaultPaymentMethod(id: Float!): PaymentMethod!
+  createPaymentMethod(data: PaymentMethodInput!): PaymentMethod!
+  updatePaymentMethod(data: PaymentMethodInput!): PaymentMethod!
+  deletePaymentMethod(id: Float!): Boolean!
+  createGroup(data: GroupInput!): Group!
+  updateGroup(data: GroupInput!): Group!
+  deleteGroup(id: Float!): Boolean!
+  createGroupDetail(data: GroupDetailInput!): GroupDetail!
+  deleteGroupDetail(id: Float!): Boolean!
+  createLog(data: LogsInput!): Logs!
+  createHashTags(data: CreateHashTagsInput!): [HashTag!]!
+  createTutoring(data: TutoringInput!): Tutoring!
+  cancelTutoring(id: Float!): Tutoring!
+  linkTutorial(input: TutoringTutorialInput!): TutoringTutorialLink!
+  updateTutoring(data: TutoringInput!): Tutoring!
+  startSession(sessionId: Float!): Session
+  createSessions(tutoringId: Float!, data: SessionsInput!): [Session!]
+  endSession(sessionId: Float!): Session!
+  updateExtraTime(extraTime: ExtraTimeInput!, id: Float!): Session!
+  reviewSession(review: SessionReviewInput!): SessionReview!
+  apply(
+    locale: String
+    sessions: [SessionInput!]!
+    tutoringId: Float!
+  ): Applying!
+  applySession(data: ApplyingSessionInput!): Applying!
+  cancelSessionApplying(sessionId: Float!): Boolean!
+  cancelApplying(tutoringId: Float!): Applying!
+  acceptApplying(isPrivate: Boolean, sessionId: Float!): Applying!
+  acceptSessionApplying(applyingId: Float!): Applying!
+  book(
+    covered: Boolean
+    budget: Float
+    isPrivate: Boolean
+    sessionId: Float!
+  ): Booking!
+  cancel(sessionId: Float!): Booking!
+  createNotification(data: NotificationInput!): Notification
+  readNotifications(ids: ReadNotificationsInput!): [Notification!]
+  createNotificationClientToken(
+    data: NotificationTokenInput!
+  ): NotificationToken
+  createMcqResponses(input: McqResponseContainerInput!): McqResult!
+  send(data: SendMailInput!): MailPayLoad!
+  sendWelcomeMail(code: String!): MailPayLoad!
+  notify(data: ProfileNotificationInput!): ProfileNotification!
+  markNotificationSeen(id: Float!): ProfileNotification!
+  markNotificationsSeen(
+    notifications: [ProfileNotificationInput!]!
+  ): [ProfileNotification!]!
+  registerDevice(data: SnsNotificationTokenInput!): SnsNotificationToken!
+  notifySns(userId: Float!, message: String!): Boolean!
+  registerDeviceFirebase(
+    data: SnsNotificationTokenInput!
+  ): SnsNotificationToken!
+  notifyFirebase(data: SnsNotificationInput!): Boolean!
+  revokeDeviceFirebase(token: String!): Boolean!
+  singleUpload(file: Upload!): SingleUploadResponse!
+  createStripeCheckoutSession(
+    currency: String!
+    amount: Float!
+  ): CheckoutSession
+  createStripeCustomer(data: CustomerInput!): Customer
+  createStripeToken(data: TokenInput!): Token!
+  createStripePayment(data: PaymentInput!): Payment!
+  setDefaultStripeCard(customer: String!, source: String!): Customer
+  createSource(customerId: String!, data: TokenInput!): Source
+  createPaypalPayment(data: ItemInput!): Result!
+}

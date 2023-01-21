@@ -1,0 +1,38 @@
+import {User} from './user.model';
+import {ProfileType} from './profile-type.model';
+import {ProfileTutoringLanguage} from './profile-tutoring-language.model';
+import {Language} from './language.model';
+import {Currency} from './currency.model';
+import {SessionReview} from './session-review.model';
+import {SessionRole} from './session-role.model';
+import {Material} from './material.model';
+import {Reference} from './reference.model';
+import {Hashtag} from './hashtag.model';
+
+export type Profile = {
+    id?: number;
+    user: User;
+    profileType: ProfileType;
+    name?: string;
+    firstName?: string;
+    lastName?: string;
+    iban?: string;
+    photoPath?: string;
+    sponsoredByProfile: Profile;
+    tutoringLanguages: ProfileTutoringLanguage[];
+    appDisplayLanguage: Language;
+    hashtags?: Hashtag[];
+    thematic: Reference;
+    materials: Material[];
+    reminders?: number[];
+    reminderEmail?: string;
+    reminderPhone?: string;
+    sessionRole?: SessionRole;
+    currency?: Currency;
+    reviews?: SessionReview[];
+    rating?: number;
+    score?: number;
+    completed?: boolean;
+    checked?: boolean;
+    tutorPrice?: number;
+};
